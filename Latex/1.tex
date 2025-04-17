@@ -1,0 +1,47 @@
+\documentclass[12pt]{article} % 设置文档类型和字体大小
+
+\usepackage[UTF8]{ctex}      % 支持中文
+\usepackage{amsmath}         % 数学公式支持
+\usepackage{amssymb}         % 数学符号支持
+\usepackage{graphicx}       % 图片插入支持
+\usepackage{geometry}       % 页面布局设置
+
+% 页面布局设置
+\geometry{
+  a4paper, % 使用A4纸张大小
+  left=3cm,right=3cm,top=3cm,bottom=3cm, % 页边距
+  bindingoffset=0cm, % 装订偏移
+}
+
+% 设置文档标题
+\title{myfirst document}
+\author{曾礼曾爷爷}
+\date{\today}
+
+\begin{document}
+
+\maketitle % 生成标题
+
+\section{第一节} % 创建一个章节
+这是曾礼找到女朋友的概率公式
+
+$$
+\frac{1}{\int{xdx}}
+$$
+
+
+\subsection{小节标题} % 创建一个小节
+这里可以写一些更详细的内容。
+
+\begin{equation}
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+\end{equation}
+
+\section{第二节}
+这是另一个章节，你可以继续添加更多的内容。
+
+\begin{equation}
+f(x) = \sum_{n=0}^{\infty} \frac{x^n}{n!}
+\end{equation}
+
+\end{document}

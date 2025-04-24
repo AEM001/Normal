@@ -10,15 +10,15 @@ class UStudent
 	string stuName;
     double credits;
     bool result;
-
-
+// 不能设置布尔型的这个参数的设定
 public:
-	
+	// 采用protected的方式或者多态
 	//添加构造及接口函数
     UStudent(){};
     UStudent(string si,string st,double cred):stuId(si),stuName(st),credits(cred),result(false){};
     void check(){
         result=(credits>=160);//学籍审核
+	    // 不能单独定义另外一个函数，使用check函数进行result计算生成
     }
     void print(){
         cout<<"本科生"<<' '<<stuId<<' '<<stuName<<' '<<credits<<' '<<(result?"可以毕业":"不能毕业")<<endl;
@@ -32,6 +32,7 @@ public:
 }; 
 
 //由本科生公有派生研究生类
+// 也需要添加构造和接口函数
 class GStudent : public UStudent
 {
 	//按需添加数据成员
@@ -45,9 +46,7 @@ public:
 void check()
 {setresult(getcredits()>=36&&teaching&&research);}
 void print()
-{cout<<"研究生"<<' '<<getid()<<' '<<getname()<<' '<<getcredits()<<' '<<(getresult()?"可以毕业":"不能毕业")<<endl;}
-
-	                       
+{cout<<"研究生"<<' '<<getid()<<' '<<getname()<<' '<<getcredits()<<' '<<(getresult()?"可以毕业":"不能毕业")<<endl;}	                       
 };
 
 
@@ -62,8 +61,7 @@ for(int i=0;i<5;i++){
     string si,st;double cred;
     cin>>si>>st>>cred;
     ustu[i]=UStudent(si,st,cred);}
-	
-	
+		
 	
 	cout << "读入4名研究生学号、姓名已修学分、教学、科研考核结果，并进行审核：" << endl;
 	//添加代码

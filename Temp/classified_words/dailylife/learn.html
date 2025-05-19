@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动作与移动词汇练习 - 翻面卡片</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .perspective {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
+        }
+        /* Removed .flip-card:hover .flip-card-inner to disable hover flip */
+        .flip-card.is-flipped .flip-card-inner { /* Allow click to flip */
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            border-radius: 0.5rem; /* Tailwind's rounded-lg */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            padding: 1.5rem; /* p-6 */
+            box-sizing: border-box; /* Ensure padding doesn't break layout */
+            overflow-y: auto; /* Allow scrolling for long content */
+        }
+        .flip-card-front {
+            background-color: #38bdf8; /* sky-500 */
+            color: white;
+        }
+        .flip-card-back {
+            background-color: #f1f5f9; /* slate-100 */
+            color: #1e293b; /* slate-800 */
+            transform: rotateY(180deg);
+            align-items: flex-start; /* Align text to left for readability */
+            text-align: left;
+        }
+        /* Custom scrollbar for webkit browsers */
+        .flip-card-front::-webkit-scrollbar,
+        .flip-card-back::-webkit-scrollbar {
+            width: 6px;
+        }
+        .flip-card-front::-webkit-scrollbar-thumb,
+        .flip-card-back::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+        .flip-card-front::-webkit-scrollbar-track,
+        .flip-card-back::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-200 min-h-screen p-4 sm:p-8">
+    <div class="container mx-auto">
+        <header class="text-center mb-8 sm:mb-12">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-700">动作与移动词汇练习</h1>
+            <p class="text-slate-600 mt-2 text-sm sm:text-base">以下是针对您提供的单词设计的练习题。请先尝试回答题目，然后点击卡片查看答案和解释。</p>
+        </header>
+
+        <div id="flashcard-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            </div>
+    </div>
+
+    <script>
+        const flashcardData = [
+            {
+                question_type: "翻译表达题",
+                question_main: "他在搬重物时发出了哼声。",
+                question_follow_up: null,
+                answer: "He let out a grunt while lifting the heavy box.",
+                explanation: "grunt: 发出哼声，（尤指因用力或不高兴而发出的）短促的低沉声音。这个词常用来形容搬重物、表示不满或思考时发出的声音。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "周末我们计划去爬山。",
+                question_follow_up: null,
+                answer: "We plan to hike in the mountains this weekend.",
+                explanation: "hike: 徒步旅行，远足。通常指在乡村或山上进行较长时间的步行，是一种休闲活动。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "Be careful not to bump your head on the low ceiling.",
+                question_follow_up: "请问句中 \"bump\" 的意思是什么？",
+                answer: "碰撞，撞到",
+                explanation: "bump: （使）碰撞，撞击。常指意外地碰到某物或某人，可能导致轻微的疼痛或损坏。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "The old tree crashed to the ground during the storm.",
+                question_follow_up: "请问句中 \"crashed\" 描述了树的什么动作？",
+                answer: "倒下，坠落（带有巨大声响）",
+                explanation: "crash: 猛烈地倒下，坠落；发出巨响。这个词强调动作的突然性和伴随的巨大声响，常用于描述物体坠落、车辆相撞等。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "孩子紧紧地抓住妈妈的手。",
+                question_follow_up: null,
+                answer: "The child continued to cling to his mother's hand.",
+                explanation: "cling: 紧紧抓住，依附。表示牢固地抓住某物或某人，不愿松开，也可以引申为依恋、离不开。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "她用研钵和杵研磨香料。",
+                question_follow_up: null,
+                answer: "She used a mortar and pestle to grind the spices.",
+                explanation: "grind: 研磨，磨碎。指用研钵、磨子等工具将固体物质磨成粉末或更小的颗粒。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "He had to strip off his wet clothes after falling in the river.",
+                question_follow_up: "请问句中 \"strip off\" 的意思是什么？",
+                answer: "脱掉（衣服）",
+                explanation: "strip: 脱光（衣服），剥去。通常指快速或完全地脱掉衣物，也可以指剥去物体的外层。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "那些牛在广阔的牧场上漫步。",
+                question_follow_up: null,
+                answer: "The cattle were allowed to roam freely in the vast pasture.",
+                explanation: "roam: 漫步，漫游，闲逛。指没有特定目的地地随意走动，常用于描述动物或人在广阔区域内的活动。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "The dog gave a playful tug on the rope.",
+                question_follow_up: "请问句中 \"tug\" 描述了狗的什么动作？",
+                answer: "用力拉，拽",
+                explanation: "tug: 用力拉，拽。通常指短暂、有力的拉动，常用于拔河、拉绳子等场景。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "狗嗅了嗅地上的食物。",
+                question_follow_up: null,
+                answer: "The dog began to sniff at the food on the ground.",
+                explanation: "sniff: 嗅，闻。指用鼻子吸气以闻气味，常用于描述动物或人在闻东西时的动作。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "他正在用斧头砍柴。",
+                question_follow_up: null,
+                answer: "He is using an axe to chop wood.",
+                explanation: "chop: 砍，劈，剁。指用斧头、刀等工具快速有力地砍或剁，常用于砍柴、切菜等。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "The dog's tail began to wag excitedly when it saw its owner.",
+                question_follow_up: "请问句中 \"wag\" 描述了狗尾巴的什么动作？",
+                answer: "摇摆，摇动",
+                explanation: "wag: （尾巴）摇摆。特指动物（尤其是狗）摇动尾巴的动作，通常表示高兴或兴奋。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "请帮我挤一下橙汁。",
+                question_follow_up: null,
+                answer: "Could you please squeeze some orange juice for me?",
+                explanation: "squeeze: 挤，榨；挤压。指通过按压或挤压的方式从某物中取出液体或使其变形。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "Her cheeks began to flush with embarrassment.",
+                question_follow_up: "请问句中 \"flush\" 描述了她脸颊的什么变化？",
+                answer: "变红，发红",
+                explanation: "flush: （脸）发红，涨红。通常是由于害羞、尴尬、生气或运动等原因导致脸部血液循环加快而变红。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "孩子们高兴地跳着绳。",
+                question_follow_up: null,
+                answer: "The children were happily skipping rope.",
+                explanation: "skip: 跳跃，蹦跳；跳绳。指轻快地跳跃前进，也可以特指跳绳这项活动。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "The bird hopped from one branch to another.",
+                question_follow_up: "请问句中 \"hopped\" 描述了鸟的什么动作？",
+                answer: "单脚跳，跳跃",
+                explanation: "hop: 单脚跳；（鸟、小动物等）短距离跳跃。指用一只脚或双脚同时进行短距离的跳跃。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "他们不得不把船拖到岸上。",
+                question_follow_up: null,
+                answer: "They had to haul the boat onto the shore.",
+                explanation: "haul: （用力）拖，拉。指费力地拖动沉重或巨大的物体。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "He was so hungry that he devoured the entire pizza in minutes.",
+                question_follow_up: "请问句中 \"devoured\" 描述了他吃披萨的方式？",
+                answer: "狼吞虎咽地吃",
+                explanation: "devour: 狼吞虎咽地吃；吞食。指非常饥饿地快速吃完食物，也可以比喻贪婪地阅读书籍等。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "他粗鲁地把门推开。",
+                question_follow_up: null,
+                answer: "He gave the door a rude shove open.",
+                explanation: "shove: 推，猛推。指粗鲁或用力地推某物或某人。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "The faster car managed to overtake the slower one on the highway.",
+                question_follow_up: "请问句中 \"overtake\" 的意思是什么？",
+                answer: "超车，赶上",
+                explanation: "overtake: 赶上，超过（尤指车辆）。指在行进中超过前面的车辆或人。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "我们不得不趟过小溪。",
+                question_follow_up: null,
+                answer: "We had to wade across the shallow stream.",
+                explanation: "wade: 趟水，涉水。指在水或其他液体中行走。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "The angry man decided to hurl a stone into the lake.",
+                question_follow_up: "请问句中 \"hurl\" 描述了他扔石头的动作？",
+                answer: "用力投掷，猛扔",
+                explanation: "hurl: 用力投掷，猛扔。指用很大的力量扔出某物，常带有愤怒或暴力的意味。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "绳子突然猛地一拉。",
+                question_follow_up: null,
+                answer: "The rope gave a sudden jerk.",
+                explanation: "jerk: 猛拉，急拽；突然的抽动。指快速、突然的拉动或抽动。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "The dry twig snapped easily when I bent it.",
+                question_follow_up: "请问句中 \"snapped\" 描述了树枝发生了什么？",
+                answer: "折断，发出清脆的断裂声",
+                explanation: "snap: （使）突然折断；发出清脆的断裂声。指细长物体突然断裂并发出清脆的声音。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "孩子们喜欢在水坑里踩水。",
+                question_follow_up: null,
+                answer: "Children love to splash in puddles.",
+                explanation: "splash: 溅，泼；戏水。指液体飞溅，也可以指在水中玩耍，溅起水花。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "The ice made the path slippery, and I almost slid.",
+                question_follow_up: "请问句中 \"slid\" 描述了我差点发生了什么？",
+                answer: "滑倒，滑动",
+                explanation: "slide: 滑动，滑行；滑倒。指平稳地移动，或者在光滑表面上失去平衡而滑倒。"
+            },
+            {
+                question_type: "翻译表达题",
+                question_main: "他随意地把钥匙扔在桌子上。",
+                question_follow_up: null,
+                answer: "He carelessly tossed the keys onto the table.",
+                explanation: "toss: 扔，抛，掷。指随意或轻松地扔出某物。"
+            },
+            {
+                question_type: "阅读理解题",
+                question_main: "You need to exert more effort if you want to finish on time.",
+                question_follow_up: "请问句中 \"exert\" 的意思是什么？",
+                answer: "施加（力量、影响等），努力",
+                explanation: "exert: 运用，施加（力量、影响等）；努力。指施加体力、智力或影响力，以达到某种目的。"
+            }
+        ];
+
+        const container = document.getElementById('flashcard-container');
+
+        flashcardData.forEach(item => {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'flip-card h-80 sm:h-96 perspective rounded-lg shadow-lg cursor-pointer'; // Added cursor-pointer
+            cardDiv.setAttribute('tabindex', '0'); // For accessibility
+
+            const cardInnerDiv = document.createElement('div');
+            cardInnerDiv.className = 'flip-card-inner';
+
+            // Front of the card
+            const frontDiv = document.createElement('div');
+            frontDiv.className = 'flip-card-front';
+            
+            let questionHTML = `<p class="text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2 sm:mb-3">${item.question_type}</p>
+                                <p class="text-base sm:text-lg font-medium">${item.question_main}</p>`;
+            if (item.question_follow_up) {
+                questionHTML += `<p class="text-sm sm:text-base mt-2">${item.question_follow_up}</p>`;
+            }
+            frontDiv.innerHTML = questionHTML;
+
+            // Back of the card
+            const backDiv = document.createElement('div');
+            backDiv.className = 'flip-card-back';
+            backDiv.innerHTML = `
+                <div class="w-full">
+                    <p class="text-sm sm:text-base font-semibold text-sky-600 mb-1 sm:mb-2">答案：</p>
+                    <p class="text-base sm:text-lg font-medium text-slate-800 mb-2 sm:mb-4">${item.answer}</p>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${item.explanation.replace(/\n/g, '<br>')}</p>
+                </div>
+            `;
+
+            cardInnerDiv.appendChild(frontDiv);
+            cardInnerDiv.appendChild(backDiv);
+            cardDiv.appendChild(cardInnerDiv);
+            container.appendChild(cardDiv);
+
+            // Event listener for click to flip
+            cardDiv.addEventListener('click', () => {
+                cardDiv.classList.toggle('is-flipped');
+            });
+            // Event listener for Enter/Space key to flip (for accessibility)
+            cardDiv.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    cardDiv.classList.toggle('is-flipped');
+                    event.preventDefault(); // Prevent space from scrolling the page
+                }
+            });
+        });
+    </script>
+</body>
+</html>

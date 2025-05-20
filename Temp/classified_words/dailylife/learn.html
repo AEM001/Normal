@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>动作与移动词汇练习 - 翻面卡片</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Noto Serif SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, serif;
         }
         .perspective {
             perspective: 1000px;
@@ -302,13 +302,18 @@
             // Back of the card
             const backDiv = document.createElement('div');
             backDiv.className = 'flip-card-back';
+            // 修改背面卡片的内容生成部分
             backDiv.innerHTML = `
                 <div class="w-full">
                     <p class="text-sm sm:text-base font-semibold text-sky-600 mb-1 sm:mb-2">答案：</p>
                     <p class="text-base sm:text-lg font-medium text-slate-800 mb-2 sm:mb-4">${item.answer}</p>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${item.explanation.replace(/\n/g, '<br>')}</p>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${formatExplanation(item.explanation)}</p>
                 </div>
             `;
+            // 在script标签顶部添加这个辅助函数
+            function formatExplanation(explanation) {
+            return explanation.replace(/^([a-zA-Z]+):/, '<span class="font-bold text-lg text-sky-700">$1</span>:');
+            }
 
             cardInnerDiv.appendChild(frontDiv);
             cardInnerDiv.appendChild(backDiv);

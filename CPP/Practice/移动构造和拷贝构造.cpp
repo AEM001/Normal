@@ -17,6 +17,7 @@ public:
     // 拷贝构造函数
     Buffer(const Buffer& other) :data(new int[other.size]),size(other.size){
         memcpy(data,other.data,size);
+        // memcpy(data, other.data, size * sizeof(int));
         // 使用std::copy怎么写
         cout<<"拷贝构造"<<endl;
     }
@@ -27,35 +28,52 @@ public:
 
     // 移动构造函数
     Buffer(Buffer&& other) noexcept:data(other.data),size(other.size){
+        cout<<"移动构造"<<endl;
         other.data=nullptr;
         other.size=0;
-        cout<<"移动构造"<<endl;
+        
     }
     // TODO：在此处补全初始化列表及函数体
     
 
     // 拷贝赋值运算符
     Buffer& operator=(const Buffer& other)
-    {for(int i=0;i<size;++i)
-        {
-            data[i]=other.data[i];
+    {   cout<<"拷贝赋值运算符"<<endl;
+        if(this!=&other)
+        {delete[]data;
+            size=other.size;
+            data=new int[size];
+        // for(int i=0;i<size;++i)
+        // {
+        //     data[i]=other.data[i];
+        // }
+        memcpy(data,other.data,size*sizeof(int));
         }
+        return *this;
 
     }
     // TODO：补全函数体
 
     // 移动赋值运算符
     Buffer& operator=(Buffer&& other) noexcept{
-        for(int i=0;i<size;++i)
-        {
-            data[i]=other.data[i];
-        }
-        delete &other;
+        cout<<"移动赋值运算符"<<endl;
+        if(this!=&other)
+        {delete[]data;
+        //为什么需要清空，直接赋值为什么不行
+        size=other.size;
+        data=new int[size];
+        other.data=nullptr;
+        other.size=0;
+        return *this;
     }
+    }
+    
     // TODO：补全函数体
 
     // 析构函数
-    ~Buffer(){delete data;}
+    ~Buffer(){
+    cout<<"析构函数"<<endl;
+    delete[] data;}
     // TODO：补全函数体
 
     void print() const {

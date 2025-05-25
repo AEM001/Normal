@@ -11,6 +11,9 @@
         "ctime": "cpp",
         "chrono": "cpp",
         "limits": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "thread": "cpp",
+        "cstdlib": "cpp",
+        "algorithm": "cpp"
     }
 }

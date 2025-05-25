@@ -7,7 +7,7 @@
 
 // 创建数据目录
 void DataManager::createDataDirectory() {
-    // 在Windows和Linux下创建目录的简单实现
+   
     #ifdef _WIN32
         _mkdir("data");
     #else

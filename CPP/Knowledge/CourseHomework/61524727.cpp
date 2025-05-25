@@ -22,6 +22,7 @@ public:
             cout << "空表" << endl;
             return;
         }
+        //读取文件数据，并且调整list大小
         infile.seekg(0, ios::end);
         streamoff bytes = infile.tellg();
         if (bytes <= 0 || bytes % sizeof(T) != 0) {

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <ctime>
 #include <direct.h> // 用于Windows下创建目录
-#include <sys/stat.h> // 用于Linux下创建目录
+// #include <sys/stat.h> // 用于mac下创建目录
 
 // 创建数据目录
 void DataManager::createDataDirectory() {

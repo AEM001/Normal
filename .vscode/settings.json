@@ -14,6 +14,7 @@
         "random": "cpp",
         "thread": "cpp",
         "cstdlib": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "map": "cpp"
     }
 }

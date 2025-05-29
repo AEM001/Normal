@@ -1,6 +1,6 @@
 #ifndef DATA_MANAGER_H
 #define DATA_MANAGER_H
-
+#include"exception.h"
 #include "user.h"
 #include "resource.h"
 #include "rental.h"

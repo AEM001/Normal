@@ -1,5 +1,20 @@
 {
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "string": "cpp",
+        "memory": "cpp",
+        "stdexcept": "cpp",
+        "filesystem": "cpp",
+        "vector": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "ctime": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp",
+        "random": "cpp",
+        "thread": "cpp",
+        "cstdlib": "cpp",
+        "algorithm": "cpp",
+        "map": "cpp"
     }
 }

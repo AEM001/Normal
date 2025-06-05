@@ -28,7 +28,7 @@ int main()
         cerr << "无法打开文件进行读取！" << endl;
         return 1;
     }
-    
+    // ******
     int length;
     infile.read((char*)&length, sizeof(length));  // 读取字符串的长度
     string temp(length, '\0');                    // 创建一个空字符串并准备读取内容
